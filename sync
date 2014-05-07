@@ -1,0 +1,6 @@
+rm banco.db
+python manage.py syncdb << END
+no
+END
+python manage.py mockup
+
