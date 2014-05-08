@@ -4,35 +4,47 @@ from django.core.management.base import NoArgsCommand
 from sistema.models import *
 from django.contrib.auth.models import User
 
-membros = [
+locais = [
     {
-        'nome' : 'Augusto Nishi',
-        'apelido' : 'Nishi',
-        'ano_de_ingresso' : '2011', 
-        'ano_de_saida' : '2014',
-        'email' : 'augusto.nishi@gmail.com',
-        'mensagem' : 'Oi =D'
+        'id': 1,
+        'nome' : 'gaveta',
+        'capacidade': 10,
     },{
-        'nome' : 'Pedro Martinez',
-        'apelido' : 'Pedrao',
-        'ano_de_ingresso' : '2012', 
-        'ano_de_saida' : '2015',
-        'email' : 'pvsmartinez@gmail.com',
-        'mensagem' : 'Ola'
+        'id': 2,
+        'nome' : 'cabide',
+        'capacidade': 5,
     },{
-        'nome' : 'Milena Ming Perez',
-        'apelido' : 'Ming',
-        'ano_de_ingresso' : '2010', 
-        'ano_de_saida' : '2013',
-        'email' : 'mmpmilena@gmail.com',
-        'mensagem' : '<span style="color:#FF00BF;font-weight:bold">Oiiiiiiiiiii!!!</span>'
+        'id': 3,
+        'nome' : 'estande',
+        'capacidade': 20,
+    }
+]
+roupas = [
+    {
+        'id': 1,
+        'nome' : 'Camiseta',
+        'local': 1,
     },{
-        'nome' : 'Joao Ninguem',
-        'apelido' : 'Joao',
-        'ano_de_ingresso' : '2008', 
-        'ano_de_saida' : '2008',
-        'email' : 'joao@ninguem.com',
-        'mensagem' : 'Ninguem e perfeito'
+        'id': 2,
+        'nome' : 'Shorts',
+        'local': 1,
+    },{
+        'id': 3,
+        'nome' : 'cueca',
+        'local': 1,
+    },{
+        'id': 4,
+        'nome' : 'Blusa',
+        'local': 2,
+    }
+]
+combinacoes = [
+    {
+        'nome' : 'Com Blusa',
+        'roupas': [1,2,3,4],
+    },{
+        'nome' : 'Sem Blusa',
+        'roupas': [1,2,3],
     }
 ]
 
@@ -47,33 +59,17 @@ class Command(NoArgsCommand):
         user.is_staff = True
         user.save()
 
-        egplus = Evento('egplus','EG Plus', 
-            'Conectando Gerações','004E95','FBAA26',data="24 de maio de 2014",
-            local='R.Conde de Iraja 96, Sao Paulo, Brasil',logo="static/images/logo/egplus.png",
-            descricao='shorts e chinelo')
-        egplus.save()
+        for local in locais:
+            element = Local(**local)
+            element.save()
 
-        analista = Cargo('Analista')
-        analista.save()
+        for roupa in roupas:
+            element = Roupa(id = roupa['id'], nome = roupa['nome'])
+            element.local = Local.objects.get(id = roupa['local'])
+            element.save()
 
-        gerente = Cargo('Gerente')
-        gerente.save()
+        for combinacao in combinacoes:
+            element = Combinacao(nome = combinacao['nome'])
+            element.save()
+            element.roupas = Roupa.objects.filter(id__in = combinacao['roupas'])
 
-        diretor = Cargo('Diretor')
-        diretor.save()
-
-        conselho = Cargo('Conselheiro')
-        conselho.save()
-
-        Imagem(evento=egplus, titulo='Foto1', arquivo='static/images/fotos/egplus_1.jpg').save()
-        Imagem(evento=egplus, titulo='Foto2', arquivo='static/images/fotos/egplus_2.jpg').save()
-        Imagem(evento=egplus, titulo='Foto3', arquivo='static/images/fotos/egplus_3.jpg').save()
-
-        cargos = [analista,gerente,diretor,conselho]
-
-        for membro in membros:
-            memb = Membro(**membro)
-            memb.cargo = cargos.pop()
-            memb.evento = egplus
-            memb.confirmado = True
-            memb.save()
