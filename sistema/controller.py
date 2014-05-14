@@ -4,19 +4,11 @@ from django.template import RequestContext
 from sistema.models import *
 from django import forms
 
-
-class InputForm (forms.Form):
-    rfid = forms.CharField()
-    comando = forms.CharField()
-
-
 # Create your views here.
 def home(request):
-    form = InputForm()
     return render(request, "home.html", locals())
 
 def configurar(request):
-    form = InputForm()
     if request.method == 'POST':
         cmd = request.POST.get('comando')
         lista=cmd.split(' ')
@@ -25,7 +17,6 @@ def configurar(request):
     return render(request, "configurar.html", locals())
 
 def config_roupa(request):
-    form = InputForm()
     if request.method == 'POST':
         cmd = request.POST.get('comando')
         lista=cmd.split(' ')
@@ -45,7 +36,6 @@ def config_roupa(request):
     return render(request, "config_roupa.html", locals())
 
 def roupa_incluir_RFID(request, id_roupa):
-    form = InputForm()
     if request.method == 'POST':
         roupa = Roupa.objects.get(id=id_roupa)
         cmd = request.POST.get('rfid')
@@ -56,7 +46,6 @@ def roupa_incluir_RFID(request, id_roupa):
     return render(request, "roupa_incluirRFID.html", locals())
 
 def roupa_incluir_local(request, id_roupa):
-    form = InputForm()
     if request.method == 'POST':
         roupa = Roupa.objects.get(id=id_roupa)
         cmd = request.POST.get('rfid')

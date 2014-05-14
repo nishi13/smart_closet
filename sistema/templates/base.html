@@ -2,8 +2,10 @@
 <html>
 <body>
 <h4 id='output'>Ola</h4>
-<form method="POST" id="formulario"> {% csrf_token %}
-    {{form.as_p}}
+<form method="POST" id="formulario"> 
+    <input type='hidden' name='csrfmiddlewaretoken' value='Ak9hAzeEeGe3pNVtuxV0YAawZIu6aiyd' />
+    <p><label for="id_rfid">Rfid:</label> <input id="id_rfid" name="rfid" type="text" /></p>
+    <p><label for="id_comando">Comando:</label> <input id="id_comando" name="comando" type="text" /></p>
     <input type="submit">
 </form>
 <script>
@@ -20,8 +22,9 @@
         e.preventDefault();
         var input = document.getElementById('id_comando').value;
         var rfid = document.getElementById('id_rfid').value;
-        if rfid:
+        if (rfid){
             comandos['RFID']();
+        }
         input = input.split(' ');
         var comandoNome = input[0];
         console.log(comandoNome);
