@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h4 id='output'>Ola</h4>
+<form method="POST" id="formulario"> {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit">
+</form>
+<script>
+    var comandos = {
+        {%block comandos%}
+        init: function () {
+            t2p('configurar,ajuda');
+        },
+        configurar: function () {
+            window.location = "/configurar";
+        },
+        ajuda: function () {
+            t2p('HELP!!');
+        },
+        {%endblock%}
+    }
+</script>
+<script>
+    document.getElementById('formulario').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var comandoNome = document.getElementById('id_comando').value
+        console.log(comandoNome);
+        comandos[comandoNome]();
+    });
+
+    function t2p (saida) {
+        document.getElementById('output').innerHTML = saida;
+    }
+    comandos.init();
+</script>
+</body> 
+</html>

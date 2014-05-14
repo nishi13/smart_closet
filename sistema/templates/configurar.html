@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{%block comandos%}
+    init: function () {
+        t2p('roupa ou armario');
+    },
+    roupa: function () {
+        window.location = "/configurar/roupa";
+    },
+    armario: function () {
+        window.location = "/configurar/armario";
+    },
+    ajuda: function () {
+        t2p('HELP!!');
+    },
+{%endblock%}

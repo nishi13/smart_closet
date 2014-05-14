@@ -14,7 +14,7 @@ class Roupa(models.Model):
     
     def __unicode__(self):
         return self.nome
-
+        
 class Combinacao(models.Model):
     nome = models.CharField(max_length=128)
     roupas = models.ManyToManyField(Roupa)

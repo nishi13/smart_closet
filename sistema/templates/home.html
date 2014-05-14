@@ -1,9 +1,12 @@
-<!DOCTYPE html>
-<html>
-<body>
-<form method="POST"> {% csrf_token %}
-    {{form.as_p}}
-    <input type="submit">
-</form>
-</body>
-</html>
+{% extends "base.html" %}
+{%block comandos%}
+    init: function () {
+        t2p('configurar,ajuda');
+    },
+    configurar: function () {
+        window.location = "/configurar";
+    },
+    ajuda: function () {
+        t2p('HELP!!');
+    },
+{%endblock%}
