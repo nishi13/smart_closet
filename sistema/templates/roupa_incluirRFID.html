@@ -1,12 +1,9 @@
 {% extends "base.html" %}
 {%block comandos%}
     init: function () {
-        t2p('incluir ou excluir');
+        t2p('Passe a etiquetea no leitor RFID');
     },
-    incluir: function () {
-        document.getElementById('formulario').submit();
-    },
-    excluir: function () {
+    RFID: function () {
         document.getElementById('formulario').submit();
     },
     ajuda: function () {

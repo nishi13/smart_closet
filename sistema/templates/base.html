@@ -9,12 +9,6 @@
 <script>
     var comandos = {
         {%block comandos%}
-        init: function () {
-            t2p('configurar,ajuda');
-        },
-        configurar: function () {
-            window.location = "/configurar";
-        },
         ajuda: function () {
             t2p('HELP!!');
         },
@@ -24,7 +18,12 @@
 <script>
     document.getElementById('formulario').addEventListener('submit', function(e) {
         e.preventDefault();
-        var comandoNome = document.getElementById('id_comando').value
+        var input = document.getElementById('id_comando').value;
+        var rfid = document.getElementById('id_rfid').value;
+        if rfid:
+            comandos['RFID']();
+        input = input.split(' ');
+        var comandoNome = input[0];
         console.log(comandoNome);
         comandos[comandoNome]();
     });

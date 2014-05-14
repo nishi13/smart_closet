@@ -9,12 +9,12 @@ class Local(models.Model):
         return self.nome
 
 class Roupa(models.Model):
-    nome = models.CharField(max_length=128,)
+    nome = models.CharField(max_length=128)
     local = models.ForeignKey(Local, blank=True, null=True, on_delete=models.SET_NULL)
-    
+    rfid = models.CharField(max_length=128, unique = True, blank=True, null=True)
     def __unicode__(self):
         return self.nome
-        
+
 class Combinacao(models.Model):
     nome = models.CharField(max_length=128)
     roupas = models.ManyToManyField(Roupa)

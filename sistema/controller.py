@@ -26,13 +26,42 @@ def configurar(request):
 
 def config_roupa(request):
     form = InputForm()
-    return render(request, "config_roupa.html", locals())
-
-def roupa_incluir(request):
-    form = InputForm()
     if request.method == 'POST':
         cmd = request.POST.get('comando')
         lista=cmd.split(' ')
-        for item in lista:
-            print(item)
-    return render(request, "roupa_incluir.html", locals())
+        comando = lista.pop(0)
+        if comando == 'incluir':
+            nome = ''
+            for parte in lista:
+                if nome:
+                    nome = nome + '_' + parte
+                else:
+                    nome = parte
+            roupa = Roupa(nome = nome)
+            roupa.save()
+            return HttpResponseRedirect(str(roupa.id) + '/incluirRDIF')
+        else:
+            pass
+    return render(request, "config_roupa.html", locals())
+
+def roupa_incluir_RFID(request, id_roupa):
+    form = InputForm()
+    if request.method == 'POST':
+        roupa = Roupa.objects.get(id=id_roupa)
+        cmd = request.POST.get('rfid')
+        roupa.rdif = cmd
+        roupa.save()
+        return HttpResponseRedirect('/configurar/roupa/' + str(roupa.id) + '/local')
+
+    return render(request, "roupa_incluirRFID.html", locals())
+
+def roupa_incluir_local(request, id_roupa):
+    form = InputForm()
+    if request.method == 'POST':
+        roupa = Roupa.objects.get(id=id_roupa)
+        cmd = request.POST.get('rfid')
+        roupa.rdif = cmd
+        roupa.save()
+        return HttpResponseRedirect('/configurar/roupa/' + str(roupa.id) + '/local')
+
+    return render(request, "base.html", locals())
