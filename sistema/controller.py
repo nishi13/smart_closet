@@ -72,16 +72,14 @@ def roupa_incluir_local(request, id_roupa):
 def vestir(request):
     return render(request, "vestir.html", locals())
 
-def preparar_combinacao(request):
+def combinacao(request):
 
     cmd = request.POST.get('comando')
-    try:
-        ocasioes = Combinacao.objects.value_list('ocasioes').distinct()
-        print ocasioes
-        return HttpResponseRedirect('/roupa/')
-    except:
-        pass
+
+    ocasioes = Combinacao.objects.values_list()
+    print ocasioes
+    
+    
 
 
-
-    return render(request, "roupa_incluir_local.html", locals())
+    return render(request, "combinacao.html", locals())
