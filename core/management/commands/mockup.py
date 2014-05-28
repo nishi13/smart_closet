@@ -75,12 +75,16 @@ class Command(NoArgsCommand):
             element.save()
 
         for roupa in roupas:
-            element = Roupa(id = roupa['id'], nome = roupa['nome'])
-            element.local = Local.objects.get(id = roupa['local'])
+            roupas_id = roupa['local']
+            del roupa['local']
+            element = Roupa(**roupa)
+            element.local = Local.objects.get(id = roupas_id)
             element.save()
 
         for combinacao in combinacoes:
-            element = Combinacao(nome = combinacao['nome'])
+            roupas_id = combinacao['roupas']
+            del combinacao['roupas']
+            element = Combinacao(**combinacao)
             element.save()
-            element.roupas = Roupa.objects.filter(id__in = combinacao['roupas'])
+            element.roupas = Roupa.objects.filter(id__in = roupas_id)
 
