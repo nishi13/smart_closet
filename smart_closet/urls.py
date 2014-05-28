@@ -16,7 +16,7 @@ urlpatterns = patterns('',
     url(r'^vestir/$', 'sistema.controller.vestir'),
 	url(r'^avaliar/$', 'sistema.controller.avaliar'),
 	url(r'^avaliar/(?P<id_combinacao>[0-9]+)/avaliar_combinacao$', 'sistema.controller.avaliar_combinacao'),
-	url(r'^avaliar/finalizar/$', 'sistema.controller.avaliar_finalizar'),
+	url(r'^avaliar/avaliar_finalizado$', 'sistema.controller.avaliar_finalizado'),
     url(r'^vestir/combinacao/$', 'sistema.controller.combinacao'),#NAO ESTA FEITO
     url(r'^vestir/peca/$', 'sistema.controller.peca'),      # NAO ESTA FEITO
     

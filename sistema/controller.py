@@ -101,7 +101,7 @@ def avaliar(request):
                     datac = datac + '_' + parte
                 else:
                     datac = parte
-            combav = combinacao.objects.get(data=datac)
+            combav = Combinacao.objects.get(data=datac)
             return HttpResponseRedirect(str(combav.id) + '/avaliar_combinacao')
         elif comando == 'nome':
             nomec = ''
@@ -110,8 +110,26 @@ def avaliar(request):
                     nomec = nomec + '_' + parte
                 else:
                     nomec = parte
-            combav = combinacao.objects.get(nome=nomec)
+            combav = Combinacao.objects.get(nome=nomec)
             return HttpResponseRedirect(str(combav.id) + '/avaliar_combinacao')
         else:
             pass
     return render(request, "avaliar.html", locals())
+    
+def avaliar_combinacao(request, id_combinacao):
+    if request.method == 'POST':
+        cmd = request.POST.get('comando')
+        combav = Combinacao.objects.get(id=id_combinacao)
+        avalc = cmd
+        combav.aval = avalc
+        return HttpResponseRedirect('/avaliar/avaliar_finalizado')
+    return render(request, "avaliar_combinacao.html", locals())
+   
+def avaliar_finalizado(request):
+    if request.method == 'POST':
+        cmd = request.POST.get('comando')
+        if cmd == 'finalizar':
+            return HttpResponseRedirect('/')
+        else:
+            pass
+    return render(request, "avaliar_finalizado.html", locals())
