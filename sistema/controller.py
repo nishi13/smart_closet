@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
@@ -64,9 +65,11 @@ def roupa_incluir_local(request, id_roupa):
     else:
         cmd = request.POST.get('comando')
         try:
-            armarios = Local.objects.get(nome=cmd)
-            return HttpResponseRedirect('/configurar/roupa/' + str(roupa.id) + '/local')
+            armario = Local.objects.get(nome=cmd)
+            roupa.local = armario
+            roupa.save()
+            return HttpResponseRedirect('/configurar/roupa/')
         except:
-            pass
+            saida = 'Error'
 
     return render(request, "roupa_incluir_local.html", locals())
