@@ -29,16 +29,15 @@ def config_roupa(request):
             roupa = Roupa()
             roupa.cor = lista.pop()
             roupa.tipo = lista.pop()
-            nome = ''
-            for parte in lista:
-                if nome:
-                    nome = nome + '_' + parte
-                else:
-                    nome = parte
+            roupa.nome = ' '.join(lista)
             roupa.save()
             return HttpResponseRedirect(str(roupa.id) + '/incluirRDIF')
-        else:
-            pass
+        elif comando == 'excluir':
+            nome = ' '.join(lista)
+            roupa = Roupa.objects.get(nome = nome)
+            roupa.delete()
+            saida = ''
+
     return render(request, "config_roupa.html", locals())
 
 def roupa_incluir_RFID(request, id_roupa):
@@ -71,6 +70,7 @@ def roupa_incluir_local(request, id_roupa):
             return HttpResponseRedirect('/configurar/roupa/')
         except:
             saida = 'Error'
+    return render(request, "roupa_incluir_local.html", locals())
 
 def vestir(request):
     return render(request, "vestir.html", locals())
