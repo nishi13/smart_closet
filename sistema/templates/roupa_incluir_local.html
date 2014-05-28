@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{%block comandos%}
+    init: function () {
+        t2p('Sugestoes: {% for local in sugestoes %}{{local.nome}}, {% endfor %}');
+    },
+    incluir: function () {
+        document.getElementById('formulario').submit();
+    },
+    excluir: function () {
+        document.getElementById('formulario').submit();
+    },
+    ajuda: function () {
+        t2p('HELP!!');
+    },
+{%endblock%}

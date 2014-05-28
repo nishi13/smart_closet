@@ -9,14 +9,17 @@ locais = [
         'id': 1,
         'nome' : 'gaveta',
         'capacidade': 10,
+        'tipo' : 'camiseta shorts cueca camisa',
     },{
         'id': 2,
         'nome' : 'cabide',
         'capacidade': 5,
+        'tipo' : 'camiseta blusa camisa',
     },{
         'id': 3,
         'nome' : 'estande',
         'capacidade': 20,
+        'tipo' : 'camiseta blusa calca camisa',
     }
 ]
 roupas = [
@@ -24,18 +27,26 @@ roupas = [
         'id': 1,
         'nome' : 'Camiseta',
         'local': 1,
+        'tipo' : 'camiseta',
+        'cor'  : 'azul',
     },{
         'id': 2,
         'nome' : 'Shorts',
         'local': 1,
+        'tipo' : 'shorts',
+        'cor'  : 'preto',
     },{
         'id': 3,
         'nome' : 'cueca',
         'local': 1,
+        'tipo' : 'cueca',
+        'cor'  : 'branca',
     },{
         'id': 4,
         'nome' : 'Blusa',
         'local': 2,
+        'tipo' : 'blusa',
+        'cor'  : 'cinza',
     }
 ]
 combinacoes = [
@@ -51,9 +62,9 @@ combinacoes = [
 class Command(NoArgsCommand):
     help = '''Cria Grupos'''
     requires_model_validation = 0
-        
+
     def handle_noargs(self, **options):
-        
+
         user = User.objects.create_user('admin', 'admin@admin.com', 'admin')
         user.is_superuser = True
         user.is_staff = True

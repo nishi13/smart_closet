@@ -25,13 +25,15 @@ def config_roupa(request):
         lista=cmd.split(' ')
         comando = lista.pop(0)
         if comando == 'incluir':
+            roupa = Roupa()
+            roupa.cor = lista.pop()
+            roupa.tipo = lista.pop()
             nome = ''
             for parte in lista:
                 if nome:
                     nome = nome + '_' + parte
                 else:
                     nome = parte
-            roupa = Roupa(nome = nome)
             roupa.save()
             return HttpResponseRedirect(str(roupa.id) + '/incluirRDIF')
         else:
@@ -49,11 +51,17 @@ def roupa_incluir_RFID(request, id_roupa):
     return render(request, "roupa_incluirRFID.html", locals())
 
 def roupa_incluir_local(request, id_roupa):
-    if request.method == 'POST':
-        roupa = Roupa.objects.get(id=id_roupa)
+    roupa = Roupa.objects.get(id=id_roupa)
+    if request.method == 'GET':
+        armarios = Local.objects.filter(tipo__icontains=roupa.tipo)
+        sugestoes = []
+        for armario in armarios:
+            if armario.capacidade > armario.roupasCount:
+                sugestoes.append(armario)
+    else:
         cmd = request.POST.get('rfid')
         roupa.rdif = cmd
         roupa.save()
         return HttpResponseRedirect('/configurar/roupa/' + str(roupa.id) + '/local')
 
-    return render(request, "base.html", locals())
+    return render(request, "roupa_incluir_local.html", locals())
