@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{%block comandos%}
+    init: function () {
+        t2p('Selecionar combinação para avaliação: Última, Data, ou Identificação');
+    },
+    ultima: function () {
+        document.getElementById('formulario').submit();
+    },
+    data: function () {
+        document.getElementById('formulario').submit();
+    },
+	nome: function () {
+        document.getElementById('formulario').submit();
+    },
+    ajuda: function () {
+        t2p('HELP!!');
+    },
+{%endblock%}

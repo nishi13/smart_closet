@@ -65,3 +65,33 @@ def roupa_incluir_local(request, id_roupa):
         return HttpResponseRedirect('/configurar/roupa/' + str(roupa.id) + '/local')
 
     return render(request, "roupa_incluir_local.html", locals())
+
+def avaliar(request):
+    if request.method == 'POST':
+        cmd = request.POST.get('comando')
+        lista=cmd.split(' ')
+        comando = lista.pop(0)
+        if comando == 'ultima':
+            combav = Combinacao.objects.all().order_by('data')[0]
+            return HttpResponseRedirect(str(combav.id) + '/avaliar_combinacao')
+        elif comando == 'data':
+            datac = ''
+            for parte in lista:
+                if datac:
+                    datac = datac + '_' + parte
+                else:
+                    datac = parte
+            combav = combinacao.objects.get(data=datac)
+            return HttpResponseRedirect(str(combav.id) + '/avaliar_combinacao')
+        elif comando == 'nome':
+            nomec = ''
+            for parte in lista:
+                if nomec:
+                    nomec = nomec + '_' + parte
+                else:
+                    nomec = parte
+            combav = combinacao.objects.get(nome=nomec)
+            return HttpResponseRedirect(str(combav.id) + '/avaliar_combinacao')
+        else:
+            pass
+    return render(request, "avaliar.html", locals())
