@@ -15,8 +15,8 @@ urlpatterns = patterns('',
     url(r'^mala/$', 'sistema.controller.mala'),
     url(r'^guardar/$', 'sistema.controller.guardar'),
     url(r'^vestir/$', 'sistema.controller.vestir'),
-    url(r'^vestir/preparo_combinacao/$', 'sistema.controller.preparar_combinacao'),#NAO ESTA FEITO
-    url(r'^vestir/escolhe_peca/$', 'sistema.controller.escolhe_peca'),      # NAO ESTA FEITO
+    url(r'^vestir/combinacao/$', 'sistema.controller.combinacao'),#NAO ESTA FEITO
+    url(r'^vestir/peca/$', 'sistema.controller.peca'),      # NAO ESTA FEITO
 
     
     # url(r'^blog/', include('blog.urls')),

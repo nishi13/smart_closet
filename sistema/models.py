@@ -24,6 +24,9 @@ class Combinacao(models.Model):
     nome = models.CharField(max_length=128)
     roupas = models.ManyToManyField(Roupa)
     nota = models.IntegerField(default=0)
+    clima_associado = models.CharField(max_length=128)
+    ocasiao = models.CharField(max_length=128)
+    data = models.DateTimeField(null = True, blank=True)
 
     def __unicode__(self):
         return self.nome
