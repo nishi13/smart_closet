@@ -1,12 +1,9 @@
 {% extends "base.html" %}
 {%block comandos%}
     init: function () {
-        t2p('-incluir ou -excluir');
+        t2p('Qual e a ocasiao');
     },
-    incluir: function () {
-        document.getElementById('formulario').submit();
-    },
-    excluir: function () {
+    ocasiao: function () {
         document.getElementById('formulario').submit();
     },
     ajuda: function () {
