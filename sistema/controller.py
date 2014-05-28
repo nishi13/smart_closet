@@ -6,6 +6,9 @@ from django import forms
 
 # Create your views here.
 def home(request):
+    locais = Local.objects.all()
+    if len(locais) == 0:
+        return HttpResponseRedirect('/configurar/armario')
     return render(request, "home.html", locals())
 
 def configurar(request):
