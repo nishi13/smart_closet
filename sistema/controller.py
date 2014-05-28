@@ -21,6 +21,7 @@ def configurar(request):
     return render(request, "configurar.html", locals())
 
 def config_roupa(request):
+    saida = '-incluir ou -excluir'
     if request.method == 'POST':
         cmd = request.POST.get('comando')
         lista=cmd.split(' ')
@@ -34,9 +35,12 @@ def config_roupa(request):
             return HttpResponseRedirect(str(roupa.id) + '/incluirRDIF')
         elif comando == 'excluir':
             nome = ' '.join(lista)
-            roupa = Roupa.objects.get(nome = nome)
-            roupa.delete()
-            saida = ''
+            try:
+                roupa = Roupa.objects.get(nome__iexact = nome)
+                roupa.delete()
+                saida = nome + ' deletado com sucesso'
+            except:
+                saida = nome + u' não encontrado'
 
     return render(request, "config_roupa.html", locals())
 
@@ -99,8 +103,6 @@ def combinacao(request):
             
     #TODO : erro -> nao existe a ocasiao
 
-    
-    
 
 
     return render(request, "combinacao.html", locals())
