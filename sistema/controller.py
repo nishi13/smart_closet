@@ -59,7 +59,7 @@ def roupa_incluir_local(request, id_roupa):
         for armario in armarios:
             if armario.capacidade > armario.roupasCount:
                 sugestoes.append(armario)
-        saida = u'Sugestões: '
+        saida = u'Sugestoes: '
         for armario in sugestoes:
             saida += armario.nome + ', '
     else:
@@ -71,5 +71,20 @@ def roupa_incluir_local(request, id_roupa):
             return HttpResponseRedirect('/configurar/roupa/')
         except:
             saida = 'Error'
+
+def vestir(request):
+    return render(request, "vestir.html", locals())
+
+def preparar_combinacao(request):
+
+    cmd = request.POST.get('comando')
+    try:
+        ocasioes = Combinacao.objects.value_list('ocasioes').distinct()
+        print ocasioes
+        return HttpResponseRedirect('/roupa/')
+    except:
+        pass
+
+
 
     return render(request, "roupa_incluir_local.html", locals())
