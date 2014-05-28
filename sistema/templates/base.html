@@ -26,8 +26,8 @@
         }
         input = input.split(' ');
         var comandoNome = input[0];
-        console.log(comandoNome);
-        comandos[comandoNome]();
+        if (comandos[comandoNome]) comandos[comandoNome]();
+        else comandos.padrao();
     });
 
     function t2p (saida) {

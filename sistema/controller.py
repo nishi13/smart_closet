@@ -58,10 +58,15 @@ def roupa_incluir_local(request, id_roupa):
         for armario in armarios:
             if armario.capacidade > armario.roupasCount:
                 sugestoes.append(armario)
+        saida = u'Sugestões: '
+        for armario in sugestoes:
+            saida += armario.nome + ', '
     else:
-        cmd = request.POST.get('rfid')
-        roupa.rdif = cmd
-        roupa.save()
-        return HttpResponseRedirect('/configurar/roupa/' + str(roupa.id) + '/local')
+        cmd = request.POST.get('comando')
+        try:
+            armarios = Local.objects.get(nome=cmd)
+            return HttpResponseRedirect('/configurar/roupa/' + str(roupa.id) + '/local')
+        except:
+            pass
 
     return render(request, "roupa_incluir_local.html", locals())
