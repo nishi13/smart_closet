@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {%block comandos%}
     init: function () {
-        t2p('{{saida}}');
+        t2p('Escolha a peça');
     },
-    padrao: function () {
+    escolher: function () {
         document.getElementById('formulario').submit();
     },
     ajuda: function () {
