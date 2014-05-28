@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {%block comandos%}
     init: function () {
-        t2p('Deseja -incluir ou -excluir um local');
+        t2p('{{saida}}');
     },
     incluir: function () {
         document.getElementById('formulario').submit();
@@ -9,7 +9,16 @@
     excluir: function () {
         document.getElementById('formulario').submit();
     },
+    listar: function () {
+        document.getElementById('formulario').submit();
+    },
     ajuda: function () {
         t2p('HELP!!');
+    },
+    padrao:function () {
+        t2p('Commando inválido!');
+    },
+    voltar:function () {
+        window.location='/configurar';
     },
 {%endblock%}

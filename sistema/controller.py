@@ -44,6 +44,39 @@ def config_roupa(request):
 
     return render(request, "config_roupa.html", locals())
 
+def config_armario(request):
+    saida = 'Deseja -incluir ou -excluir um local'
+    if request.method == 'POST':
+        cmd = request.POST.get('comando')
+        lista=cmd.split(' ')
+        comando = lista.pop(0)
+        if comando == 'incluir':
+            try:
+                local = Local()
+                local.tipo = lista.pop()
+                local.capacidade = int(lista.pop())
+                local.nome = ' '.join(lista)
+                local.save()
+                saida = local.nome + ' salvo com sucesso, Deseja -incluir ou -excluir um local'
+            except:
+                saida = 'Erro ao tentar salvar, Deseja -incluir ou -excluir um local'
+        elif comando == 'excluir':
+            nome = ' '.join(lista)
+            try:
+                local = Local.objects.get(nome__iexact = nome)
+                local.delete()
+                saida = nome + ' deletado com sucesso, Deseja -incluir ou -excluir um local'
+            except:
+                saida = nome + u' não encontrado, Deseja -incluir ou -excluir um local'
+        elif comando == 'listar':
+            saida = ''
+            locais = Local.objects.all()
+            for local in locais:
+                saida += local.nome + ', '
+            saida += 'Deseja -incluir ou -excluir um local'
+
+    return render(request, "config_armario.html", locals())
+
 def roupa_incluir_RFID(request, id_roupa):
     if request.method == 'POST':
         roupa = Roupa.objects.get(id=id_roupa)
@@ -90,3 +123,15 @@ def combinacao(request):
 
 
     return render(request, "combinacao.html", locals())
+
+def peca(request):
+    pass
+
+def guardar(request):
+    pass
+
+def mala(request):
+    pass
+
+def avaliar(request):
+    pass

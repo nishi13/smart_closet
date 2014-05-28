@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {%block comandos%}
     init: function () {
-        t2p('configurar,ajuda');
+        t2p('mala, avaliar, guardar, vestir, configurar, ajuda');
     },
     configurar: function () {
         window.location = "/configurar";
@@ -12,7 +12,7 @@
     mala: function(){
     	window.location = "/mala";
 	},
-	avalaiar: function(){
+	avaliar: function(){
     	window.location = "/avaliar";
 	},
 	guardar: function(){
@@ -21,5 +21,11 @@
 	vestir: function(){
     	window.location = "/vestir";
 	},
+    padrao:function () {
+        t2p('Commando inválido!');
+    },
+    voltar:function () {
+        window.location='/';
+    },
 
 {%endblock%}
