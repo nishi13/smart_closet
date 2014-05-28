@@ -76,11 +76,29 @@ def vestir(request):
     return render(request, "vestir.html", locals())
 
 def combinacao(request):
+    saida = u'Qual a ocasião'
+    if request.method == 'POST':
 
-    cmd = request.POST.get('comando')
 
-    ocasioes = Combinacao.objects.values_list()
-    print ocasioes
+        sugestao = []
+        cmd = request.POST.get('comando')
+        sugere = Combinacao.objects.filter(ocasiao__iexact = cmd).order_by('-nota')
+        print sugere
+        for comb in sugere.values() :
+            sugestao.append(comb);
+        saida = u'Sugestoes: '
+        for comb in sugestao:
+            saida += comb['nome'] + ','
+
+    return render(request,"combinacao.html",locals())
+    #ocasioes = Combinacao.objects.values_list('ocasiao',flat=True)
+    #print ocasioes
+    #set(ocasioes)
+    #for ocasiao in ocasioes :
+    #    if (cmd == ocasiao && sugeriu ==0) :
+            
+    #TODO : erro -> nao existe a ocasiao
+
     
     
 

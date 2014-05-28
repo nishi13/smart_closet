@@ -54,10 +54,17 @@ combinacoes = [
         'nome' : 'Com Blusa',
         'roupas': [1,2,3,4],
         'ocasiao' : 'Praia',
+        'nota' : 3,
     },{
         'nome' : 'Sem Blusa',
         'roupas': [1,2,3],
         'ocasiao': 'Formal',
+        'nota' : 7,
+    },{
+        'nome' : 'Lindo',
+        'roupas': [1,2,3],
+        'ocasiao': 'Formal',
+        'nota' : 9,
     }
 ]
 
