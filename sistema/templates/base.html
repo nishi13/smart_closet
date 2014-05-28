@@ -2,8 +2,7 @@
 <html>
 <body>
 <h4 id='output'>Ola</h4>
-<form method="POST" id="formulario"> 
-    <input type='hidden' name='csrfmiddlewaretoken' value='Ak9hAzeEeGe3pNVtuxV0YAawZIu6aiyd' />
+<form method="POST" id="formulario">{% csrf_token %}
     <p><label for="id_rfid">Rfid:</label> <input id="id_rfid" name="rfid" type="text" /></p>
     <p><label for="id_comando">Comando:</label> <input id="id_comando" name="comando" type="text" /></p>
     <input type="submit">
@@ -36,5 +35,5 @@
     }
     comandos.init();
 </script>
-</body> 
+</body>
 </html>
