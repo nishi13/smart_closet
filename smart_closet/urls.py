@@ -15,6 +15,10 @@ urlpatterns = patterns('',
     url(r'^mala/$', 'sistema.controller.mala'),
     url(r'^guardar/$', 'sistema.controller.guardar'),
     url(r'^vestir/$', 'sistema.controller.vestir'),
+    url(r'^vestir/preparo_combinacao/$', 'sistema.controller.preparar_combinacao'),#NAO ESTA FEITO
+    url(r'^vestir/escolhe_peca/$', 'sistema.controller.escolhe_peca'),      # NAO ESTA FEITO
+
+    
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
