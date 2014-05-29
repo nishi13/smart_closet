@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {%block comandos%}
     init: function () {
-        t2p('Selecionar combinação para avaliação: Última, Data, ou Identificação');
+        t2p('Avaliação. Selecione o critério de pesquisa de combinação para avaliar. <br> - "ultima", para ultima combinação utilizada; <br> - "data [data]", para pesquisa por data; <br> - "nome [nome]" para pesquisa por nome;');
     },
     ultima: function () {
         document.getElementById('formulario').submit();

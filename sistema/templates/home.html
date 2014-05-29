@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {%block comandos%}
     init: function () {
-        t2p('mala, avaliar, guardar, vestir, configurar, ajuda');
+        t2p('Bem vindo ao SmartCloset. O que você deseja fazer? <br> - "vestir", para retirar peças de roupas; <br> - "guardar", para guardar peças de roupas; <br> - "configurar", para incluir ou excluir roupas e locais de armário; <br> -  "avaliar", para dar nota a combinações já provadas; <br> - "combinar", para gerar novas combinações; <br> - "ajuda", para repetir as opções disponíveis;');
     },
     configurar: function () {
         window.location = "/configurar";
