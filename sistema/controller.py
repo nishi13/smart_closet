@@ -105,6 +105,7 @@ def avaliar(request):
                     nomec = nomec + '_' + parte
                 else:
                     nomec = parte
+            print nomec
             combav = Combinacao.objects.get(nome=nomec)
             return HttpResponseRedirect(str(combav.id) + '/avaliar_combinacao')
         else:

@@ -54,13 +54,13 @@ combinacoes = [
         'nome' : 'Calor Com Blusa',
         'roupas': [1,2,3,4],
         'ocasiao' : 'Praia',
-        'clima_associado' : 'Chuvoso'
+        'clima_associado' : 'Chuvoso',
         'nota': 7,
     },{
         'nome' : 'Calor Sem Blusa',
         'roupas': [1,2,3],
         'ocasiao': 'Formal',
-        'clima_associado' : 'Calor'
+        'clima_associado' : 'Calor',
         'nota': 6
     }
 ]
