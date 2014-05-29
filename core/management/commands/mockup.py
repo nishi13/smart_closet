@@ -62,6 +62,11 @@ combinacoes = [
         'ocasiao': 'Formal',
         'clima_associado' : 'Calor',
         'nota': 6
+    },{
+        'nome' : 'Lindo',
+        'roupas': [1,2,3],
+        'ocasiao': 'Formal',
+        'nota' : 9,
     }
 ]
 

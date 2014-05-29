@@ -21,6 +21,7 @@ def configurar(request):
     return render(request, "configurar.html", locals())
 
 def config_roupa(request):
+    saida = '-incluir ou -excluir'
     if request.method == 'POST':
         cmd = request.POST.get('comando')
         lista=cmd.split(' ')
@@ -34,11 +35,47 @@ def config_roupa(request):
             return HttpResponseRedirect(str(roupa.id) + '/incluirRDIF')
         elif comando == 'excluir':
             nome = ' '.join(lista)
-            roupa = Roupa.objects.get(nome = nome)
-            roupa.delete()
-            saida = ''
+            try:
+                roupa = Roupa.objects.get(nome__iexact = nome)
+                roupa.delete()
+                saida = nome + ' deletado com sucesso'
+            except:
+                saida = nome + u' não encontrado'
 
     return render(request, "config_roupa.html", locals())
+
+def config_armario(request):
+    saida = 'Deseja -incluir ou -excluir um local'
+    if request.method == 'POST':
+        cmd = request.POST.get('comando')
+        lista=cmd.split(' ')
+        comando = lista.pop(0)
+        if comando == 'incluir':
+            try:
+                local = Local()
+                local.tipo = lista.pop()
+                local.capacidade = int(lista.pop())
+                local.nome = ' '.join(lista)
+                local.save()
+                saida = local.nome + ' salvo com sucesso, Deseja -incluir ou -excluir um local'
+            except:
+                saida = 'Erro ao tentar salvar, Deseja -incluir ou -excluir um local'
+        elif comando == 'excluir':
+            nome = ' '.join(lista)
+            try:
+                local = Local.objects.get(nome__iexact = nome)
+                local.delete()
+                saida = nome + ' deletado com sucesso, Deseja -incluir ou -excluir um local'
+            except:
+                saida = nome + u' não encontrado, Deseja -incluir ou -excluir um local'
+        elif comando == 'listar':
+            saida = ''
+            locais = Local.objects.all()
+            for local in locais:
+                saida += local.nome + ', '
+            saida += 'Deseja -incluir ou -excluir um local'
+
+    return render(request, "config_armario.html", locals())
 
 def roupa_incluir_RFID(request, id_roupa):
     if request.method == 'POST':
@@ -80,7 +117,39 @@ def combinacao(request):
     ocasioes = Combinacao.objects.values_list()
     print ocasioes
     return render(request, "combinacao.html", locals())
+    saida = u'Qual a ocasião'
+    if request.method == 'POST':
+    
+        sugestao = []
+        cmd = request.POST.get('comando')
+        sugere = Combinacao.objects.filter(ocasiao__iexact = cmd).order_by('-nota')
+        print sugere
+        for comb in sugere.values() :
+            sugestao.append(comb);
+        saida = u'Sugestoes: '
+        for comb in sugestao:
+            saida += comb['nome'] + ','
 
+    return render(request,"combinacao.html",locals())
+    #ocasioes = Combinacao.objects.values_list('ocasiao',flat=True)
+    #print ocasioes
+    #set(ocasioes)
+    #for ocasiao in ocasioes :
+    #    if (cmd == ocasiao && sugeriu ==0) :
+            
+    #TODO : erro -> nao existe a ocasiao
+
+    return render(request, "combinacao.html", locals())
+
+def peca(request):
+    pass
+
+def guardar(request):
+    pass
+
+def mala(request):
+    pass
+    
 def avaliar(request):
     if request.method == 'POST':
         cmd = request.POST.get('comando')

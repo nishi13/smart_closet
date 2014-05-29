@@ -1,12 +1,15 @@
 {% extends "base.html" %}
 {%block comandos%}
     init: function () {
-        t2p('Qual e a ocasiao');
-    },
-    ocasiao: function () {
-        document.getElementById('formulario').submit();
+        t2p('{{saida}}');
     },
     ajuda: function () {
         t2p('HELP!!');
+    },
+    voltar:function () {
+        window.location='/vestir';
+    },
+    padrao: function () {
+        document.getElementById('formulario').submit();
     },
 {%endblock%}
