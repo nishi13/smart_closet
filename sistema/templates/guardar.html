@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{%block comandos%}
+    init: function () {
+        t2p('Guardar roupas. Passe o código RFID da roupa que deseja guardar, ou "finalizar" para voltar ao menu.');
+    },
+    RFID: function () {
+        document.getElementById('formulario').submit();
+    },
+	finalizar: function () {
+        document.getElementById('formulario').submit();
+    },
+    ajuda: function () {
+        t2p('HELP!!');
+    },
+{%endblock%}

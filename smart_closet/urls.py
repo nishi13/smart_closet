@@ -12,11 +12,15 @@ urlpatterns = patterns('',
     url(r'^configurar/roupa/(?P<id_roupa>[0-9]+)/incluirRDIF$', 'sistema.controller.roupa_incluir_RFID'),
     url(r'^configurar/roupa/(?P<id_roupa>[0-9]+)/local$', 'sistema.controller.roupa_incluir_local'),
     url(r'^mala/$', 'sistema.controller.mala'),
-    url(r'^guardar/$', 'sistema.controller.guardar'),
     url(r'^vestir/$', 'sistema.controller.vestir'),
 	url(r'^avaliar/$', 'sistema.controller.avaliar'),
 	url(r'^avaliar/(?P<id_combinacao>[0-9]+)/avaliar_combinacao$', 'sistema.controller.avaliar_combinacao'),
 	url(r'^avaliar/avaliar_finalizado$', 'sistema.controller.avaliar_finalizado'),
+    url(r'^guardar/$', 'sistema.controller.guardar'),
+    url(r'^guardar/(?P<id_roupa>[0-9]+)/(?P<id_local>[0-9]+)/guardar_resultado$', 'sistema.controller.guardar_resultado'),
+    url(r'^combinar/$', 'sistema.controller.combinar'),
+    url(r'^combinar/(?P<id_combinacao>[0-9]+)/combinar_editar/$', 'sistema.controller.combinar_editar'),
+    url(r'^combinar/combinar_finalizado/$', 'sistema.controller.combinar_finalizado'),
     url(r'^vestir/combinacao/$', 'sistema.controller.combinacao'),#NAO ESTA FEITO
     url(r'^vestir/peca/$', 'sistema.controller.peca'),      # NAO ESTA FEITO
     
