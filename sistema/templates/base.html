@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html>
-<body>
-<h4 id='output'>Bem-vindo ao SmartCloset</h4>
+<link href="loginbox.css" rel="stylesheet" type="text/css" />
+<body background="wardrobe.jpg">
+<div style="padding: 130px 0 0 100px;">
+<div id="login-box">
+<div style="height:120px">
+<h4 id='output'>Bem-vindo ao SmartCloset.</h4>
+</div>
+<br />
+<br />
 <form method="POST" id="formulario">{% csrf_token %}
-    <p><label for="id_rfid">Rfid:</label> <input id="id_rfid" name="rfid" type="text" /></p>
-    <p><label for="id_comando">Comando:</label> <input id="id_comando" name="comando" type="text" /></p>
+    <div align="right">
+    <p><label id="tid_rfid" for="id_rfid" style="margin-top:20px;">Rfid:</label> <input id="id_rfid" name="rfid" type="text" style="margin-top:20px;" size="35" maxlength="2048" /></p>
+    <p><label id="tid_comando" for="id_comando">Comando:</label> <input id="id_comando" name="comando" type="text" size="35" maxlength="2048" /></p>
     <input type="submit">
+    </div>
 </form>
+</div>
+</div>
 <script>
     var comandos = {
         {%block comandos%}

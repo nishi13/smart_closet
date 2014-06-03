@@ -183,22 +183,11 @@ def avaliar(request):
             combav = Combinacao.objects.all().order_by('data')[0]
             return HttpResponseRedirect(str(combav.id) + '/avaliar_combinacao')
         elif comando == 'data':
-            datac = ''
-            for parte in lista:
-                if datac:
-                    datac = datac + '_' + parte
-                else:
-                    datac = parte
+            datac = ' '.join(lista)
             combav = Combinacao.objects.get(data=datac)
             return HttpResponseRedirect(str(combav.id) + '/avaliar_combinacao')
         elif comando == 'nome':
-            nomec = ''
-            for parte in lista:
-                if nomec:
-                    nomec = nomec + '_' + parte
-                else:
-                    nomec = parte
-            print nomec
+            nomec = ' '.join(lista)
             combav = Combinacao.objects.get(nome=nomec)
             return HttpResponseRedirect(str(combav.id) + '/avaliar_combinacao')
         else:
