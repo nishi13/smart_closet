@@ -233,6 +233,7 @@ def combinar(request):
             novaComb.clima_associado = lista.pop()
             novaComb.ocasiao = lista.pop()
             novaComb.nome = ' '.join(lista)
+            novaComb.save
             return HttpResponseRedirect(str(novaComb.id) +'/combinar_editar')
         else:
            pass

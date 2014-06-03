@@ -51,18 +51,21 @@ roupas = [
 ]
 combinacoes = [
     {
+        'id': 1,
         'nome' : 'Calor Com Blusa',
         'roupas': [1,2,3,4],
         'ocasiao' : 'Praia',
         'clima_associado' : 'Chuvoso',
         'nota': 7,
     },{
+        'id': 2,
         'nome' : 'Calor Sem Blusa',
         'roupas': [1,2,3],
         'ocasiao': 'Formal',
         'clima_associado' : 'Calor',
         'nota': 6
     },{
+        'id': 3,
         'nome' : 'Lindo',
         'roupas': [1,2,3],
         'ocasiao': 'Formal',
