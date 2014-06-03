@@ -230,6 +230,7 @@ def combinar(request):
     
 def combinar_editar(request, id_combinacao):
     if request.method == 'POST':
+        saida = ' '
         editComb = Combinacao.objects.get(id=id_combinacao)
         cmd = request.POST.get('comando')
         lista=cmd.split(' ')
@@ -237,11 +238,15 @@ def combinar_editar(request, id_combinacao):
         if comando == 'incluir':
             enome = ' '.join(lista)
             eroupa = Roupa.objects.get(nome=enome)
-            #COMANDO DE INCLUIR ROUPA NA COMBINAÇÃO
+            editComb.roupas.add(eroupa)
+            editComb.save()
+            saida = str(eroupa.nome) + ' adicionada a combinacao ' + str(editComb.nome) + '. '
             return HttpResponseRedirect('/combinar/' +str(id_combinacao) +'/combinar_editar')
         elif comando == 'nota':
             enota = ' '.join(lista)
             editComb.nota = enota
+            editComb.save()
+            saida = str(editComb.nome) + ' avaliada com nota ' + str(editComb.nota) + '. '
             return HttpResponseRedirect('/combinar/' +str(id_combinacao) +'/combinar_finalizado')
         else: 
            pass
