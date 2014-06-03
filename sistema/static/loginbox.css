@@ -1,8 +1,8 @@
 
 #login-box {
-	width:333px;
+	width: 400px;
 	height: 352px;
-	padding: 58px 76px 0 76px;
+	padding: 30px 76px 0 60px;
 	font: 16px Arial, Helvetica, sans-serif;
 	background: url(images/login-box-backg.png) no-repeat left top;
 }
