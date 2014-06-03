@@ -26,24 +26,28 @@ roupas = [
     {
         'id': 1,
         'nome' : 'Camiseta',
+        'rfid' : 'abc123',
         'local': 1,
         'tipo' : 'camiseta',
         'cor'  : 'azul',
     },{
         'id': 2,
         'nome' : 'Shorts',
+        'rfid' : 'abc456',
         'local': 1,
         'tipo' : 'shorts',
         'cor'  : 'preto',
     },{
         'id': 3,
         'nome' : 'cueca',
+        'rfid' : 'abc789',
         'local': 1,
         'tipo' : 'cueca',
         'cor'  : 'branca',
     },{
         'id': 4,
         'nome' : 'Blusa',
+        'rfid' : 'def123',
         'local': 2,
         'tipo' : 'blusa',
         'cor'  : 'cinza',

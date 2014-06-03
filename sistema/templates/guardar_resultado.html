@@ -1,8 +1,7 @@
 {% extends "base.html" %}
 {%block comandos%}
     init: function () {
-        t2p('{{saida}}');
-        t2p('Passe o código RFID da roupa que deseja guardar, ou "finalizar" para voltar ao menu.');
+        t2p('{{saida}}' + 'Passe o código RFID da roupa que deseja guardar, ou "finalizar" para voltar ao menu.');
     },
     RFID: function () {
         document.getElementById('formulario').submit();

@@ -152,14 +152,14 @@ def guardar(request):
             return HttpResponseRedirect('/')
         else:
             roupaguard = Roupa.objects.get(rfid=codigo)
-            localguard = roupaguard.Local;
+            localguard = roupaguard.local;
             return HttpResponseRedirect('/guardar/' + str(roupaguard.id) + '/' + str(localguard.id) + '/guardar_resultado')
     return render(request, "guardar.html", locals())
 
 def guardar_resultado(request, id_roupa, id_local):
     rroupaguard = Roupa.objects.get(id=id_roupa)
     rlocalguard = Local.objects.get(id=id_local)
-    saida = 'A peça ' + str(rroupaguard.nome) + 'está no ' + str(rlocalguard.nome) + '.'
+    saida = 'A peça ' + str(rroupaguard.nome) + ' deve ser guardada em ' + str(rlocalguard.nome) + '. '
     if request.method == 'POST':
         cmd = request.POST.get('comando')
         codigo = request.POST.get('rfid')
@@ -167,7 +167,7 @@ def guardar_resultado(request, id_roupa, id_local):
             return HttpResponseRedirect('/')
         else:
             roupaguard = Roupa.objects.get(rfid=codigo)
-            localguard = roupaguard.Local;
+            localguard = roupaguard.local;
             return HttpResponseRedirect('/guardar/' + str(roupaguard.id) + '/' + str(localguard.id) + '/guardar_resultado')
     return render(request, "guardar_resultado.html", locals())
 
@@ -233,7 +233,7 @@ def combinar(request):
             novaComb.clima_associado = lista.pop()
             novaComb.ocasiao = lista.pop()
             novaComb.nome = ' '.join(lista)
-            novaComb.save
+            novaComb.save()
             return HttpResponseRedirect(str(novaComb.id) +'/combinar_editar')
         else:
            pass
@@ -249,16 +249,16 @@ def combinar_editar(request, id_combinacao):
             enome = ' '.join(lista)
             eroupa = Roupa.objects.get(nome=enome)
             #COMANDO DE INCLUIR ROUPA NA COMBINAÇÃO
-            return HttpResponseRedirect(str(novaComb.id) +'/combinar_editar')
+            return HttpResponseRedirect('/combinar/' +str(id_combinacao) +'/combinar_editar')
         elif comando == 'nota':
             enota = ' '.join(lista)
             editComb.nota = enota
-            return HttpResponseRedirect('combinar_finalizado')
+            return HttpResponseRedirect('/combinar/' +str(id_combinacao) +'/combinar_finalizado')
         else: 
            pass
-    return render(request, "combinar.html", locals())
+    return render(request, "combinar_editar.html", locals())
     
-def combinar_finalizado(request):
+def combinar_finalizado(request, id_combinacao):
     if request.method == 'POST':
         cmd = request.POST.get('comando')
         if cmd == 'finalizar':

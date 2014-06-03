@@ -20,7 +20,7 @@ urlpatterns = patterns('',
     url(r'^guardar/(?P<id_roupa>[0-9]+)/(?P<id_local>[0-9]+)/guardar_resultado$', 'sistema.controller.guardar_resultado'),
     url(r'^combinar/$', 'sistema.controller.combinar'),
     url(r'^combinar/(?P<id_combinacao>[0-9]+)/combinar_editar/$', 'sistema.controller.combinar_editar'),
-    url(r'^combinar/combinar_finalizado/$', 'sistema.controller.combinar_finalizado'),
+    url(r'^combinar/(?P<id_combinacao>[0-9]+)/combinar_finalizado/$', 'sistema.controller.combinar_finalizado'),
     url(r'^vestir/combinacao/$', 'sistema.controller.combinacao'),#NAO ESTA FEITO
     url(r'^vestir/peca/$', 'sistema.controller.peca'),      # NAO ESTA FEITO
     
