@@ -5,8 +5,10 @@ from django.template import RequestContext
 from sistema.models import *
 from django import forms
 
+
 # Create your views here.
 def home(request):
+
     locais = Local.objects.all()
     if len(locais) == 0:
         return HttpResponseRedirect('/configurar/armario')
@@ -114,35 +116,82 @@ def vestir(request):
 
 def combinacao(request):
     cmd = request.POST.get('comando')
-    ocasioes = Combinacao.objects.values_list()
-    print ocasioes
-    return render(request, "combinacao.html", locals())
     saida = u'Qual a ocasião'
+
     if request.method == 'POST':
-    
-        sugestao = []
-        cmd = request.POST.get('comando')
-        sugere = Combinacao.objects.filter(ocasiao__iexact = cmd).order_by('-nota')
-        print sugere
-        for comb in sugere.values() :
-            sugestao.append(comb);
-        saida = u'Sugestoes: '
-        for comb in sugestao:
-            saida += comb['nome'] + ','
+        print cmd
+        sugere = list(Combinacao.objects.filter(ocasiao__iexact = cmd).order_by('-nota'))
 
-    return render(request,"combinacao.html",locals())
-    #ocasioes = Combinacao.objects.values_list('ocasiao',flat=True)
-    #print ocasioes
-    #set(ocasioes)
-    #for ocasiao in ocasioes :
-    #    if (cmd == ocasiao && sugeriu ==0) :
+        return HttpResponseRedirect( '/vestir/combinacao/' + str(sugere[0].id) + '/combinacao_finalizado')
+    else : 
+        return render(request,"combinacao.html",locals())
             
-    #TODO : erro -> nao existe a ocasiao
 
-    return render(request, "combinacao.html", locals())
+
+
+def combinacao_finalizado(request,id_comb):
+    sugestao = Combinacao.objects.get(id=id_comb)
+    saida = u'Sugestão: ' + str(sugestao) + ' que consiste em:'
+
+    roupas = list(sugestao.roupas.all())
+    for roupa in roupas :
+        saida += ' ' + str(roupa)
+
+    saida += '<br> aceitar ou recusar?'
+
+    if request.method == 'POST':
+
+
+        cmd = request.POST.get('comando')
+        if cmd == 'recusar':
+            return HttpResponseRedirect('/')
+        elif cmd =='aceitar' :
+            pass
+
+            
+
+            
+    return render(request, "combinacao_finalizado.html", locals())
+            
+
+    
+
+
+
+    
+
+def recusar(request):
+    if request.method == 'POST':
+        cmd = request.POST.get('comando')
+        lista=cmd.split(' ')
+        comando = lista.pop(0)
+        if comando == 'filtrar':
+            #TODO : implementar filtro
+            pass
+
+    pass
 
 def peca(request):
-    pass
+    saida = u'Escolha a peça'
+    retirar =[]
+    if request.method == 'POST':
+        cmd = request.POST.get('comando')
+        lista=cmd.split(' ')
+        comando = lista.pop(0)
+        identificacao = ' '.join(lista)
+        if comando == 'escolher':
+            try:
+                roupa = Roupa.objects.get(nome=identificacao)
+                saida = identificacao + u' está em ' + str(roupa.local) + u' Escolher outra peça ou finalizar?'
+                retirar.append(roupa.id)
+            except:
+                saida = identificacao + ' nao foi encontrado'  
+        elif comando == 'finalizar' :
+            for i in retirar :
+                roupa = Roupa.objects.get(id=i)
+                roupa.local = None
+            return HttpResponseRedirect('/')
+    return render(request,"peca.html", locals())
 
 def guardar(request):
     if request.method == 'POST':

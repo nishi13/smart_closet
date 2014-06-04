@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{%block comandos%}
+    init: function () {
+        t2p('Gostaria de especificar seu desejo?');
+    },
+    filtrar: function(){
+        document.getElementById('formulario').submit();
+    },
+    ajuda: function () {
+        t2p('O comando "Filtrar <filtro> <parametro> pode te ajudar\n aonde <filtro> pode ser Nome da roupa, tipo ou cor\n
+            Exemplo: "filtrar roupa shorts" te indicará uma combinação que possua um shorts');
+    },
+    voltar: function () {
+        window.location='/vestir';
+    },
+    padrao: function () {
+        document.getElementById('formulario').submit();
+    },
+{%endblock%}

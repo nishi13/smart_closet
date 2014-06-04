@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{%block comandos%}
+    init: function () {
+        t2p('{{saida}}');
+    },
+    aceitar: function () {
+        document.getElementById('formulario').submit();
+    },
+    recusar: function(){
+    	document.getElementById('formulario').submit();
+	},
+    ajuda: function () {
+        t2p('HELP!!');
+    },
+{%endblock%}

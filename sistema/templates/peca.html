@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {%block comandos%}
     init: function () {
-        t2p('Escolha a peça');
+        t2p('{{saida}}');
     },
     escolher: function () {
         document.getElementById('formulario').submit();
@@ -15,4 +15,9 @@
     voltar:function () {
         window.location='/';
     },
+    finalizar: function () {
+        document.getElementById('formulario').submit();
+    },
+
+
 {%endblock%}

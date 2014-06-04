@@ -6,8 +6,14 @@
     ajuda: function () {
         t2p('HELP!!');
     },
-    voltar:function () {
+    voltar: function () {
         window.location='/vestir';
+    },
+    recusar: function(){
+        document.getElementById('formulario').submit();
+    },
+    aceitar: function(){
+        document.getElementById('formulario').submit();
     },
     padrao: function () {
         document.getElementById('formulario').submit();
