@@ -292,6 +292,7 @@ def avaliar_combinacao(request, id_combinacao):
         cmd = request.POST.get('comando')
         avalc = cmd
         combav.aval = avalc
+        combav.save()
         return HttpResponseRedirect('/avaliar/avaliar_finalizado')
     return render(request, "avaliar_combinacao.html", locals())
    
