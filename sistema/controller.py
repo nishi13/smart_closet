@@ -84,7 +84,7 @@ def roupa_incluir_RFID(request, id_roupa):
     saida = '"' + roupa.nome +'" salvo com sucesso.'
     if request.method == 'POST':
         cmd = request.POST.get('rfid')
-        roupa.rdif = cmd
+        roupa.rfid = cmd
         roupa.save()
         return HttpResponseRedirect('/configurar/roupa/' + str(roupa.id) + '/local')
 
@@ -148,7 +148,7 @@ def combinacao_finalizado(request,id_comb):
 def retirar(request,itera):
     iteracao = itera.split('_')
     roupa = Roupa.objects.get(id=iteracao.pop(0))
-    saida = '"' +str(roupa.nome) + u'" está em "' + str(roupa.local) + '".' 
+    saida = '"' +str(roupa.nome) + u'" está em "' + str(roupa.local) + '".'
     itera = '_'.join(iteracao)
     print itera
     if request.method == 'POST':
@@ -156,7 +156,7 @@ def retirar(request,itera):
         if cmd == 'proximo':
             if len(itera) >0 :
                 return HttpResponseRedirect('/vestir/combinacao/'+ itera + '/retirar')
-            else : 
+            else :
                 return HttpResponseRedirect('/')
     return render(request, "retirar.html", locals())
 
@@ -204,7 +204,7 @@ def recusar(request,id_comb):
                 return HttpResponseRedirect('/vestir/combinacao/' + str(novasugest.id) + '/recusar')
             else:
                 novasugest = primsugest
-                saida = 'Nao foi possivel encontrar uma nova sugestao com esse filtro. Tente novamente.'    
+                saida = 'Nao foi possivel encontrar uma nova sugestao com esse filtro. Tente novamente.'
         elif comando == 'aceitar':
             roupas = list(novasugest.roupas.all())
             retirada = []
@@ -230,7 +230,7 @@ def peca(request):
                 roupa = Roupa.objects.get(nome=identificacao)
                 saida = '"' + identificacao + u'" está em "' + str(roupa.local) + '".'
             except:
-                saida = '"' + identificacao + '" nao foi encontrado.'  
+                saida = '"' + identificacao + '" nao foi encontrado.'
         elif comando == 'finalizar' :
             return HttpResponseRedirect('/')
     return render(request,"peca.html", locals())
@@ -264,7 +264,7 @@ def guardar_resultado(request, id_roupa, id_local):
 
 def mala(request):
     pass
-    
+
 def avaliar(request):
     if request.method == 'POST':
         cmd = request.POST.get('comando')
@@ -284,7 +284,7 @@ def avaliar(request):
         else:
             pass
     return render(request, "avaliar.html", locals())
-    
+
 def avaliar_combinacao(request, id_combinacao):
     combav = Combinacao.objects.get(id=id_combinacao)
     saida = 'Avaliar combinacao "' + combav.nome +'".'
@@ -295,7 +295,7 @@ def avaliar_combinacao(request, id_combinacao):
         combav.save()
         return HttpResponseRedirect('/avaliar/avaliar_finalizado')
     return render(request, "avaliar_combinacao.html", locals())
-   
+
 def avaliar_finalizado(request):
     if request.method == 'POST':
         cmd = request.POST.get('comando')
@@ -304,7 +304,7 @@ def avaliar_finalizado(request):
         else:
             pass
     return render(request, "avaliar_finalizado.html", locals())
-    
+
 def combinar(request):
     if request.method == 'POST':
         cmd = request.POST.get('comando')
@@ -320,7 +320,7 @@ def combinar(request):
         else:
            pass
     return render(request, "combinar.html", locals())
-    
+
 def combinar_editar(request, id_combinacao):
     saida = 'Editar combinacao.'
     if request.method == 'POST':
@@ -340,10 +340,10 @@ def combinar_editar(request, id_combinacao):
             editComb.save()
             saida = '"' +(editComb.nome) + '" avaliada com nota ' + str(editComb.nota) + '. '
             return HttpResponseRedirect('/combinar/' +str(id_combinacao) +'/combinar_finalizado')
-        else: 
+        else:
            pass
     return render(request, "combinar_editar.html", locals())
-    
+
 def combinar_finalizado(request, id_combinacao):
     if request.method == 'POST':
         cmd = request.POST.get('comando')
