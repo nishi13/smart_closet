@@ -163,8 +163,13 @@ def retirar(request,itera):
 def recusar(request,id_comb):
     primsugest = Combinacao.objects.get(id=id_comb)
     novasugest = Combinacao.objects.get(id=id_comb)
-    saida = ''
-    listasug = list(Combinacao.objects.filter(ocasiao__iexact = novasugest.ocasiao).order_by('-nota'))
+    #saida = ''
+    saida = 'Nova combinacao encontrada. '
+    saida += u'Sugestão: "' + str(novasugest) + '", que consiste em: '
+    roupas = list(novasugest.roupas.all())
+    for roupa in roupas :
+        saida += '"' + str(roupa) + '", '
+    listasug = list(Combinacao.objects.filter(ocasiao__iexact = primsugest.ocasiao).order_by('-nota'))
     if request.method == 'POST':
         cmd = request.POST.get('comando')
         lista=cmd.split(' ')
@@ -173,9 +178,9 @@ def recusar(request,id_comb):
             tipof = lista.pop(0)
             param = ' '.join(lista)
             rfiltro = 0
-            listasug = list(Combinacao.objects.filter(ocasiao__iexact = novasugest.ocasiao, ).order_by('-nota'))
+            listasug = list(Combinacao.objects.filter(ocasiao__iexact = primsugest.ocasiao, ).order_by('-nota'))
             for combinacao in listasug:
-                roupas = list(novasugest.roupas.all())
+                roupas = list(combinacao.roupas.all())
                 for roupa in roupas:
                     if rfiltro == 0:
                         if tipof == 'nome':
@@ -196,7 +201,9 @@ def recusar(request,id_comb):
                 roupas = list(novasugest.roupas.all())
                 for roupa in roupas :
                     saida += '"' + str(roupa) + '", '
+                return HttpResponseRedirect('/vestir/combinacao/' + str(novasugest.id) + '/recusar')
             else:
+                novasugest = primsugest
                 saida = 'Nao foi possivel encontrar uma nova sugestao com esse filtro. Tente novamente.'    
         elif comando == 'aceitar':
             roupas = list(novasugest.roupas.all())
