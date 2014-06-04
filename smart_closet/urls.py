@@ -23,13 +23,11 @@ urlpatterns = patterns('',
     url(r'^combinar/$', 'sistema.controller.combinar'),
     url(r'^combinar/(?P<id_combinacao>[0-9]+)/combinar_editar/$', 'sistema.controller.combinar_editar'),
     url(r'^combinar/(?P<id_combinacao>[0-9]+)/combinar_finalizado/$', 'sistema.controller.combinar_finalizado'),
-    url(r'^vestir/combinacao/$', 'sistema.controller.combinacao'),#NAO ESTA FEITO
+    url(r'^vestir/combinacao/$', 'sistema.controller.combinacao'),
     url(r'^vestir/combinacao/(?P<id_comb>[0-9]+)/combinacao_finalizado/$' , 'sistema.controller.combinacao_finalizado'), 
     url(r'^vestir/combinacao/(?P<id_comb>[0-9]+)/recusar/$', 'sistema.controller.recusar'),
-    url(r'^vestir/peca/$', 'sistema.controller.peca'),      # NAO ESTA FEITO
-
+    url(r'^vestir/combinacao/(?P<itera>\w+)/retirar/$', 'sistema.controller.retirar'),
+    url(r'^vestir/peca/$', 'sistema.controller.peca'),
     # url(r'^blog/', include('blog.urls')),
-
-
     url(r'^admin/', include(admin.site.urls)),
 )

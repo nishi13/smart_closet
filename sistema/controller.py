@@ -117,45 +117,53 @@ def vestir(request):
 
 def combinacao(request):
     cmd = request.POST.get('comando')
-    saida = u'Qual a ocasião'
-
+    saida = u'Qual e a ocasião?'
     if request.method == 'POST':
         print cmd
-        sugere = list(Combinacao.objects.filter(ocasiao__iexact = cmd).order_by('-nota'))
-        return HttpResponseRedirect( '/vestir/combinacao/' + str(sugere[0].id) + '/combinacao_finalizado')
-    else :
-        pass
-    return render(request,"combinacao.html",locals())     
-
-
+        try:
+            sugere = list(Combinacao.objects.filter(ocasiao__iexact = cmd).order_by('-nota'))
+            return HttpResponseRedirect( '/vestir/combinacao/' + str(sugere[0].id) + '/combinacao_finalizado')
+        except: saida = u'Ocasiao inexistente. Digite uma ocasiao valida.'
+    return render(request,"combinacao.html",locals())
 
 def combinacao_finalizado(request,id_comb):
     sugestao = Combinacao.objects.get(id=id_comb)
-    saida = u'Sugestão: ' + str(sugestao) + ' que consiste em:'
-
+    saida = u'Sugestão: "' + str(sugestao) + '", que consiste em: '
     roupas = list(sugestao.roupas.all())
     for roupa in roupas :
-        saida += ' ' + str(roupa)
-
-    saida += '<br> aceitar ou recusar?'
-
+        saida += '"' + str(roupa) + '", '
     if request.method == 'POST':
         cmd = request.POST.get('comando')
         if cmd == 'recusar':
             return HttpResponseRedirect('/vestir/combinacao/' + str(sugestao.id) + '/recusar')
-        elif cmd =='aceitar' :
-            pass
+        elif cmd =='aceitar':
+            retirada = []
+            l = len(roupas)
+            for ret in roupas :
+                 retirada.append(str(ret.id))
+            fazer = '_'.join(retirada)
+            return HttpResponseRedirect( '/vestir/combinacao/' + ''.join(fazer) + '/retirar')
     return render(request, "combinacao_finalizado.html", locals())
 
+def retirar(request,itera):
+    iteracao = itera.split('_')
+    roupa = Roupa.objects.get(id=iteracao.pop(0))
+    saida = '"' +str(roupa.nome) + u'" está em "' + str(roupa.local) + '".' 
+    itera = '_'.join(iteracao)
+    print itera
+    if request.method == 'POST':
+        cmd = request.POST.get('comando')
+        if cmd == 'proximo':
+            if len(itera) >0 :
+                return HttpResponseRedirect('/vestir/combinacao/'+ itera + '/retirar')
+            else : 
+                return HttpResponseRedirect('/')
+    return render(request, "retirar.html", locals())
 
 def recusar(request,id_comb):
     primsugest = Combinacao.objects.get(id=id_comb)
     novasugest = Combinacao.objects.get(id=id_comb)
     saida = ''
-    #saida = u'Sugestão: "' + str(novasugest) + '", que consiste em:'
-    #roupas = list(novasugest.roupas.all())
-    #for roupa in roupas :
-    #    saida += ' ' + str(roupa) + ','
     listasug = list(Combinacao.objects.filter(ocasiao__iexact = novasugest.ocasiao).order_by('-nota'))
     if request.method == 'POST':
         cmd = request.POST.get('comando')
@@ -187,11 +195,17 @@ def recusar(request,id_comb):
                 saida += u'Sugestão: "' + str(novasugest) + '", que consiste em: '
                 roupas = list(novasugest.roupas.all())
                 for roupa in roupas :
-                    saida += ' ' + str(roupa) + ','
+                    saida += '"' + str(roupa) + '", '
             else:
                 saida = 'Nao foi possivel encontrar uma nova sugestao com esse filtro. Tente novamente.'    
         elif comando == 'aceitar':
-            return HttpResponseRedirect('/vestir/combinacao/' + str(novasugest.id) + '/aceitar')
+            roupas = list(novasugest.roupas.all())
+            retirada = []
+            l = len(roupas)
+            for ret in roupas :
+                 retirada.append(str(ret.id))
+            fazer = '_'.join(retirada)
+            return HttpResponseRedirect( '/vestir/combinacao/' + ''.join(fazer) + '/retirar')
         else:
             pass
     return render(request, "recusar.html", locals())
@@ -208,7 +222,6 @@ def peca(request):
             try:
                 roupa = Roupa.objects.get(nome=identificacao)
                 saida = '"' + identificacao + u'" está em "' + str(roupa.local) + '".'
-                #roupa.local = None
             except:
                 saida = '"' + identificacao + '" nao foi encontrado.'  
         elif comando == 'finalizar' :
@@ -313,7 +326,6 @@ def combinar_editar(request, id_combinacao):
             editComb.roupas.add(eroupa)
             editComb.save()
             saida = '"' + str(eroupa.nome) + '" adicionada a combinacao "' + str(editComb.nome) + '". '
-            #return HttpResponseRedirect('/combinar/' +str(id_combinacao) +'/combinar_editar')
         elif comando == 'nota':
             enota = ' '.join(lista)
             editComb.nota = enota

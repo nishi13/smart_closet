@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {%block comandos%}
     init: function () {
-        t2p('{{saida}}');
+        t2p('{{saida}}' + '<br><br>"aceitar" ou "recusar"?');
     },
     aceitar: function () {
         document.getElementById('formulario').submit();

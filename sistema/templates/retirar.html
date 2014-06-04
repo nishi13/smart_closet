@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{%block comandos%}
+    init: function () {
+        t2p('{{saida}}'+ '<br><br>"proximo" para avancar');
+    },
+    proximo: function () {
+        document.getElementById('formulario').submit();
+    },
+    ajuda: function () {
+        t2p('HELP!!');
+    },
+    padrao:function () {
+        t2p('Commando inválido!');
+    },
+    voltar:function () {
+        window.location='/';
+    },
+{%endblock%}
