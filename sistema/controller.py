@@ -121,11 +121,12 @@ def combinacao(request):
 
     if request.method == 'POST':
         print cmd
-        sugere = list(Combinacao.objects.filter(ocasiao__iexact = cmd).order_by('-nota'))
+        try:
+            sugere = list(Combinacao.objects.filter(ocasiao__iexact = cmd).order_by('-nota'))
+            return HttpResponseRedirect( '/vestir/combinacao/' + str(sugere[0].id) + '/combinacao_finalizado')
+        except: saida = u'Ocasiao inexistente, digite ocasião válida'
+    return render(request,"combinacao.html",locals())
 
-        return HttpResponseRedirect( '/vestir/combinacao/' + str(sugere[0].id) + '/combinacao_finalizado')
-    else : 
-        return render(request,"combinacao.html",locals())
             
 
 
@@ -147,10 +148,32 @@ def combinacao_finalizado(request,id_comb):
         if cmd == 'recusar':
             return HttpResponseRedirect('/vestir/combinacao/recusar')
         elif cmd =='aceitar' :
-            pass
-            
+            retirada = []
+            l = len(roupas)
+            for ret in roupas :
+                 retirada.append(str(ret.id))
+            fazer = '_'.join(retirada)
+
+            return HttpResponseRedirect( '/vestir/combinacao/' + ''.join(fazer) + '/retirar')
           
     return render(request, "combinacao_finalizado.html", locals())
+
+def retirar(request,itera):
+    iteracao = itera.split('_')
+    roupa = Roupa.objects.get(id=iteracao.pop(0))
+    saida = str(roupa.nome) + u' está em ' + str(roupa.local) 
+    itera = '_'.join(iteracao)
+    print itera
+    if request.method == 'POST':
+        cmd = request.POST.get('comando')
+        if cmd == 'proximo':
+            if len(itera) >0 :
+                return HttpResponseRedirect('/vestir/combinacao/'+ itera + '/retirar')
+            else : 
+                return HttpResponseRedirect('/')
+
+
+    return render(request, "retirar.html", locals())
 
 
     
@@ -170,7 +193,7 @@ def peca(request):
             try:
                 roupa = Roupa.objects.get(nome=identificacao)
                 saida = identificacao + u' está em ' + str(roupa.local) + u' Escolher outra peça ou finalizar?'
-                roupa.local = None
+              
             except:
                 saida = identificacao + ' nao foi encontrado'  
         elif comando == 'finalizar' :
