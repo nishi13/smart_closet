@@ -23,7 +23,7 @@ def configurar(request):
     return render(request, "configurar.html", locals())
 
 def config_roupa(request):
-    saida = '-incluir ou -excluir'
+    saida = ''
     if request.method == 'POST':
         cmd = request.POST.get('comando')
         lista=cmd.split(' ')
@@ -47,7 +47,7 @@ def config_roupa(request):
     return render(request, "config_roupa.html", locals())
 
 def config_armario(request):
-    saida = 'Deseja -incluir ou -excluir um local'
+    saida = ''
     if request.method == 'POST':
         cmd = request.POST.get('comando')
         lista=cmd.split(' ')
@@ -59,29 +59,30 @@ def config_armario(request):
                 local.capacidade = int(lista.pop())
                 local.nome = ' '.join(lista)
                 local.save()
-                saida = local.nome + ' salvo com sucesso, Deseja -incluir ou -excluir um local'
+                saida = '"' + local.nome +'" salvo com sucesso.'
             except:
-                saida = 'Erro ao tentar salvar, Deseja -incluir ou -excluir um local'
+                saida = 'Erro ao tentar salvar.'
         elif comando == 'excluir':
             nome = ' '.join(lista)
             try:
                 local = Local.objects.get(nome__iexact = nome)
                 local.delete()
-                saida = nome + ' deletado com sucesso, Deseja -incluir ou -excluir um local'
+                saida = '"' + nome + '" deletado com sucesso.'
             except:
-                saida = nome + u' não encontrado, Deseja -incluir ou -excluir um local'
+                saida = '"' + nome + u'" não encontrado.'
         elif comando == 'listar':
             saida = ''
             locais = Local.objects.all()
             for local in locais:
                 saida += local.nome + ', '
-            saida += 'Deseja -incluir ou -excluir um local'
+            saida += ''
 
     return render(request, "config_armario.html", locals())
 
 def roupa_incluir_RFID(request, id_roupa):
+    roupa = Roupa.objects.get(id=id_roupa)
+    saida = '"' + roupa.nome +'" salvo com sucesso.'
     if request.method == 'POST':
-        roupa = Roupa.objects.get(id=id_roupa)
         cmd = request.POST.get('rfid')
         roupa.rdif = cmd
         roupa.save()
@@ -244,9 +245,10 @@ def avaliar(request):
     return render(request, "avaliar.html", locals())
     
 def avaliar_combinacao(request, id_combinacao):
+    combav = Combinacao.objects.get(id=id_combinacao)
+    saida = 'Avaliar combinacao "' + combav.nome +'".'
     if request.method == 'POST':
         cmd = request.POST.get('comando')
-        combav = Combinacao.objects.get(id=id_combinacao)
         avalc = cmd
         combav.aval = avalc
         return HttpResponseRedirect('/avaliar/avaliar_finalizado')
@@ -278,6 +280,7 @@ def combinar(request):
     return render(request, "combinar.html", locals())
     
 def combinar_editar(request, id_combinacao):
+    saida = 'Editar combinacao.'
     if request.method == 'POST':
         editComb = Combinacao.objects.get(id=id_combinacao)
         cmd = request.POST.get('comando')
@@ -286,11 +289,15 @@ def combinar_editar(request, id_combinacao):
         if comando == 'incluir':
             enome = ' '.join(lista)
             eroupa = Roupa.objects.get(nome=enome)
-            #COMANDO DE INCLUIR ROUPA NA COMBINAÇÃO
-            return HttpResponseRedirect('/combinar/' +str(id_combinacao) +'/combinar_editar')
+            editComb.roupas.add(eroupa)
+            editComb.save()
+            saida = '"' + str(eroupa.nome) + '" adicionada a combinacao "' + str(editComb.nome) + '". '
+            #return HttpResponseRedirect('/combinar/' +str(id_combinacao) +'/combinar_editar')
         elif comando == 'nota':
             enota = ' '.join(lista)
             editComb.nota = enota
+            editComb.save()
+            saida = '"' +(editComb.nome) + '" avaliada com nota ' + str(editComb.nota) + '. '
             return HttpResponseRedirect('/combinar/' +str(id_combinacao) +'/combinar_finalizado')
         else: 
            pass

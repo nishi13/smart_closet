@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {%block comandos%}
     init: function () {
-        t2p('{{saida}}');
+        t2p('Em que local de armário esta peça será guardada?<br>' + '{{saida}}');
     },
     padrao: function () {
         document.getElementById('formulario').submit();

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {%block comandos%}
     init: function () {
-        t2p('Passe a etiquetea no leitor RFID');
+        t2p('{{saida}}' + '<br>Passe a etiqueta RFID da roupa no leitor.');
     },
     RFID: function () {
         document.getElementById('formulario').submit();

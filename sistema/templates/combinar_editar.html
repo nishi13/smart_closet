@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {%block comandos%}
     init: function () {
-        t2p('Editar combinação. Inclua uma roupa com "incluir [nome]" ou dê uma nota de 0 a 10 com "nota [nota]"');
+        t2p('{{saida}}' + '<br>Inclua uma roupa com "incluir [nome]" ou dê uma nota de 0 a 10 com "nota [nota]"');
     },
     incluir: function () {
         document.getElementById('formulario').submit();

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {%block comandos%}
     init: function () {
-        t2p('{{saida}}');
+        t2p('{{saida}}'+ '<br>Deseja incluir ou excluir ou local de armario? <br> - Para incluir, "incluir [nome] [capacidade] [tipo]"; <br> - Para excluir, "excluir [nome];"<br> - Para voltar ao menu, "finalizar"');
     },
     incluir: function () {
         document.getElementById('formulario').submit();
@@ -20,5 +20,8 @@
     },
     voltar:function () {
         window.location='/configurar';
+    },
+    finalizar:function () {
+        window.location='/';
     },
 {%endblock%}
