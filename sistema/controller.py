@@ -153,13 +153,11 @@ def combinacao_finalizado(request,id_comb):
     return render(request, "combinacao_finalizado.html", locals())
 
 
-    
-
 def recusar(request):
     return render(request, "recusar.html", locals())
 
 def peca(request):
-    saida = u'Escolha a peça'
+    saida = ''
     retirar =[]
     if request.method == 'POST':
         cmd = request.POST.get('comando')
@@ -169,10 +167,10 @@ def peca(request):
         if comando == 'escolher':
             try:
                 roupa = Roupa.objects.get(nome=identificacao)
-                saida = identificacao + u' está em ' + str(roupa.local) + u' Escolher outra peça ou finalizar?'
-                roupa.local = None
+                saida = '"' + identificacao + u'" está em "' + str(roupa.local) + '".'
+                #roupa.local = None
             except:
-                saida = identificacao + ' nao foi encontrado'  
+                saida = '"' + identificacao + '" nao foi encontrado.'  
         elif comando == 'finalizar' :
             return HttpResponseRedirect('/')
     return render(request,"peca.html", locals())

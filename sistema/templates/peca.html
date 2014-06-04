@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {%block comandos%}
     init: function () {
-        t2p('{{saida}}');
+        t2p('{{saida}}' + '<br>Para escolher uma peca, "escolher [nome]".<br>Para voltar ao menu, "finalizar".');
     },
     escolher: function () {
         document.getElementById('formulario').submit();
