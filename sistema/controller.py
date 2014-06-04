@@ -145,32 +145,18 @@ def combinacao_finalizado(request,id_comb):
 
         cmd = request.POST.get('comando')
         if cmd == 'recusar':
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('/vestir/combinacao/recusar')
         elif cmd =='aceitar' :
             pass
-
             
-
-            
+          
     return render(request, "combinacao_finalizado.html", locals())
-            
-
-    
-
 
 
     
 
 def recusar(request):
-    if request.method == 'POST':
-        cmd = request.POST.get('comando')
-        lista=cmd.split(' ')
-        comando = lista.pop(0)
-        if comando == 'filtrar':
-            #TODO : implementar filtro
-            pass
-
-    pass
+    return render(request, "recusar.html", locals())
 
 def peca(request):
     saida = u'Escolha a peça'
@@ -184,13 +170,10 @@ def peca(request):
             try:
                 roupa = Roupa.objects.get(nome=identificacao)
                 saida = identificacao + u' está em ' + str(roupa.local) + u' Escolher outra peça ou finalizar?'
-                retirar.append(roupa.id)
+                roupa.local = None
             except:
                 saida = identificacao + ' nao foi encontrado'  
         elif comando == 'finalizar' :
-            for i in retirar :
-                roupa = Roupa.objects.get(id=i)
-                roupa.local = None
             return HttpResponseRedirect('/')
     return render(request,"peca.html", locals())
 
