@@ -7,74 +7,140 @@ from django.contrib.auth.models import User
 locais = [
     {
         'id': 1,
-        'nome' : 'gaveta',
+        'nome' : 'gaveta1',
         'capacidade': 10,
-        'tipo' : 'camiseta shorts cueca camisa',
+        'tipo' : 'cueca meia',
     },{
         'id': 2,
-        'nome' : 'cabide',
-        'capacidade': 5,
-        'tipo' : 'camiseta blusa camisa',
+        'nome' : 'gaveta2',
+        'capacidade': 10,
+        'tipo' : 'camiseta',
     },{
         'id': 3,
-        'nome' : 'estande',
+        'nome' : 'gaveta3',
+        'capacidade': 10,
+        'tipo' : 'shorts bermuda',
+    },{
+        'id': 4,
+        'nome' : 'cabide1',
+        'capacidade': 5,
+        'tipo' : 'calca',
+    },{
+        'id': 5,
+        'nome' : 'cabide2',
+        'capacidade': 5,
+        'tipo' : 'camisa',
+    },{
+        'id': 6,
+        'nome' : 'estante1',
         'capacidade': 20,
-        'tipo' : 'camiseta blusa calca camisa',
+        'tipo' : 'blusa',
     }
 ]
+
 roupas = [
     {
         'id': 1,
-        'nome' : 'Camiseta',
+        'nome' : 'camisetaLarga',
         'rfid' : 'abc123',
-        'local': 1,
+        'local': 2,
         'tipo' : 'camiseta',
-        'cor'  : 'azul',
+        'cor'  : 'branco',
     },{
         'id': 2,
-        'nome' : 'Shorts',
+        'nome' : 'camisetaTime',
         'rfid' : 'abc456',
-        'local': 1,
+        'local': 2,
+        'tipo' : 'camiseta',
+        'cor'  : 'vermelho',
+    },{
+        'id': 3,
+        'nome' : 'camisetaRegata',
+        'rfid' : 'abc789',
+        'local': 2,
+        'tipo' : 'camiseta',
+        'cor'  : 'preto',
+    },{
+        'id': 4,
+        'nome' : 'camisaSocial',
+        'rfid' : 'def123',
+        'local': 5,
+        'tipo' : 'camisa',
+        'cor'  : 'azul',
+    },{
+        'id': 5,
+        'nome' : 'bermudaCasual',
+        'rfid' : 'ghi123',
+        'local': 3,
+        'tipo' : 'bermuda',
+        'cor'  : 'azul',
+    },{
+        'id': 6,
+        'nome' : 'shortsCurto',
+        'rfid' : 'ghi456',
+        'local': 3,
         'tipo' : 'shorts',
         'cor'  : 'preto',
     },{
-        'id': 3,
-        'nome' : 'cueca',
-        'rfid' : 'abc789',
-        'local': 1,
-        'tipo' : 'cueca',
-        'cor'  : 'branca',
-    },{
-        'id': 4,
-        'nome' : 'Blusa',
-        'rfid' : 'def123',
-        'local': 2,
+        'id': 7,
+        'nome' : 'calcaSocial',
+        'rfid' : 'ghi789',
+        'local': 4,
+        'tipo' : 'calca',
+        'cor'  : 'preto',
+   },{
+        'id': 8,
+        'nome' : 'blusaCorrida',
+        'rfid' : 'jkl123',
+        'local': 6,
+        'tipo' : 'camiseta',
+        'cor'  : 'branco',
+   },{
+        'id': 9,
+        'nome' : 'blusaSocial',
+        'rfid' : 'jkl456',
+        'local': 6,
         'tipo' : 'blusa',
-        'cor'  : 'cinza',
+        'cor'  : 'preto',
     }
 ]
+
 combinacoes = [
     {
         'id': 1,
-        'nome' : 'Calor Com Blusa',
-        'roupas': [1,2,3,4],
-        'ocasiao' : 'Praia',
-        'clima_associado' : 'Chuvoso',
-        'nota': 7,
+        'nome' : 'Tipico',
+        'roupas': [1,5],
+        'ocasiao' : 'Casual',
+        'clima_associado' : 'Ameno',
+        'nota': 8,
     },{
         'id': 2,
-        'nome' : 'Calor Sem Blusa',
-        'roupas': [1,2,3],
-        'ocasiao': 'Formal',
-        'clima_associado' : 'Calor',
+        'nome' : 'Academia',
+        'roupas': [1,6,8],
+        'ocasiao': 'Casual',
+        'clima_associado' : 'Ameno',
         'nota': 6
     },{
         'id': 3,
-        'nome' : 'Lindo',
-        'roupas': [1,2,3],
+        'nome' : 'Estadio',
+        'roupas': [2,5],
+        'ocasiao': 'Casual',
+        'clima_associado' : 'Ameno',
+        'nota' : 5,
+    },{
+        'id': 4,
+        'nome' : 'Trabalho',
+        'roupas': [4,7,9],
         'ocasiao': 'Formal',
-        'clima_associado' : 'calor',
+        'clima_associado' : 'Frio',
         'nota' : 9,
+    },{
+        'id': 5,
+        'nome' : 'Passeio',
+        'roupas': [3,6],
+        'ocasiao': 'Praia',
+        'clima_associado' : 'Calor',
+        'nota' : 7,
     }
 ]
 
