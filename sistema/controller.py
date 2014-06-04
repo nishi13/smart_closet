@@ -122,11 +122,10 @@ def combinacao(request):
     if request.method == 'POST':
         print cmd
         sugere = list(Combinacao.objects.filter(ocasiao__iexact = cmd).order_by('-nota'))
-
         return HttpResponseRedirect( '/vestir/combinacao/' + str(sugere[0].id) + '/combinacao_finalizado')
-    else : 
-        return render(request,"combinacao.html",locals())
-            
+    else :
+        pass
+    return render(request,"combinacao.html",locals())     
 
 
 
@@ -141,19 +140,60 @@ def combinacao_finalizado(request,id_comb):
     saida += '<br> aceitar ou recusar?'
 
     if request.method == 'POST':
-
-
         cmd = request.POST.get('comando')
         if cmd == 'recusar':
-            return HttpResponseRedirect('/vestir/combinacao/recusar')
+            return HttpResponseRedirect('/vestir/combinacao/' + str(sugestao.id) + '/recusar')
         elif cmd =='aceitar' :
             pass
-            
-          
     return render(request, "combinacao_finalizado.html", locals())
 
 
-def recusar(request):
+def recusar(request,id_comb):
+    primsugest = Combinacao.objects.get(id=id_comb)
+    novasugest = Combinacao.objects.get(id=id_comb)
+    saida = ''
+    #saida = u'Sugestão: "' + str(novasugest) + '", que consiste em:'
+    #roupas = list(novasugest.roupas.all())
+    #for roupa in roupas :
+    #    saida += ' ' + str(roupa) + ','
+    listasug = list(Combinacao.objects.filter(ocasiao__iexact = novasugest.ocasiao).order_by('-nota'))
+    if request.method == 'POST':
+        cmd = request.POST.get('comando')
+        lista=cmd.split(' ')
+        comando = lista.pop(0)
+        if comando == 'filtro':
+            tipof = lista.pop(0)
+            param = ' '.join(lista)
+            rfiltro = 0
+            listasug = list(Combinacao.objects.filter(ocasiao__iexact = novasugest.ocasiao, ).order_by('-nota'))
+            for combinacao in listasug:
+                roupas = list(novasugest.roupas.all())
+                for roupa in roupas:
+                    if rfiltro == 0:
+                        if tipof == 'nome':
+                            if roupa.nome == param:
+                                novasugest = combinacao
+                                rfiltro = 1
+                        if tipof == 'tipo':
+                            if roupa.tipo == param:
+                                novasugest = combinacao
+                                rfiltro = 1
+                        if tipof == 'cor':
+                            if roupa.cor == param:
+                                novasugest = combinacao
+                                rfiltro = 1
+            if rfiltro == 1:
+                saida = 'Nova combinacao encontrada. '
+                saida += u'Sugestão: "' + str(novasugest) + '", que consiste em: '
+                roupas = list(novasugest.roupas.all())
+                for roupa in roupas :
+                    saida += ' ' + str(roupa) + ','
+            else:
+                saida = 'Nao foi possivel encontrar uma nova sugestao com esse filtro. Tente novamente.'    
+        elif comando == 'aceitar':
+            return HttpResponseRedirect('/vestir/combinacao/' + str(novasugest.id) + '/aceitar')
+        else:
+            pass
     return render(request, "recusar.html", locals())
 
 def peca(request):

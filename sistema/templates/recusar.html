@@ -1,14 +1,13 @@
 {% extends "base.html" %}
 {%block comandos%}
     init: function () {
-        t2p('Gostaria de especificar seu desejo?');
+        t2p('{{saida}}' + '<br>Para filtrar uma nova sugestao, utilize:<br>"filtro nome [nome]",<br>"filtro tipo [tipo]",<br>"filtro cor [cor]".<br>Quando estiver satisfeito, "aceitar".');
     },
     filtrar: function(){
         document.getElementById('formulario').submit();
     },
     ajuda: function () {
-        t2p('O comando "Filtrar <filtro> <parametro> pode te ajudar aonde <filtro> pode ser Nome da roupa, tipo ou cor
-                    Exemplo: "filtrar roupa shorts" te indicará uma combinação que possua um shorts');
+        t2p('O comando "Filtrar <filtro> <parametro> pode te ajudar aonde <filtro> pode ser Nome da roupa, tipo ou cor. Exemplo: "filtrar roupa shorts" te indicará uma combinação que possua um shorts');
     },
     voltar: function () {
         window.location='/vestir';
